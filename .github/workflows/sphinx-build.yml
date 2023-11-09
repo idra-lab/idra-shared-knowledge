@@ -1,0 +1,25 @@
+name: Sphinx Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sphinx-build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.10
+
+      - name: Ensure python dependencies
+        run: pip install -U sphinx furo sphinx-copybutton myst-parser
+
+      - name: Build docs
+        run: sphinx-build . html
