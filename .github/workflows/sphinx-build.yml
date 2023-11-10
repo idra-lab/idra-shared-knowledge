@@ -7,8 +7,7 @@ on:
 
 jobs:
   sphinx-build:
-    runs-on: ubuntu-22.04
-
+    runs-on: ubuntu:22.04
     permissions:
       contents: write
 
@@ -16,8 +15,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install git
-        run: apt update && apt install -y git
+      - name: Installs
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git
 
       - name: Set up Python
         uses: actions/setup-python@v4
