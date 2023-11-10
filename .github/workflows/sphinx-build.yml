@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install git
-        run: apt install -y git
+        run: apt update && apt install -y git
 
       - name: Set up Python
         uses: actions/setup-python@v4
