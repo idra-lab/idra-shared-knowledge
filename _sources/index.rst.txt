@@ -7,7 +7,7 @@
    :parser: myst_parser.sphinx_
 
 Contents
-========
+--------
 
 These are the main topics that are covered in this repository:
 
@@ -15,9 +15,10 @@ These are the main topics that are covered in this repository:
    :maxdepth: 1
 
    01_ros_2/00_index.rst
+   02_linux/00_index.rst
 
-
-
+.. include:: CONTRIBUTING.md
+   :parser: myst_parser.sphinx_
 
 .. indices and tables
 .. ==================

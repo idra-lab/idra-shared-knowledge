@@ -2,9 +2,12 @@
 <html class="no-js" lang="en" data-content_root="./">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="#" />
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" />
 
-    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 --><title>Search - IDRA laboratory - Open Knowledge  documentation</title><link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+        <title>Contributing - IDRA laboratory - Open Knowledge documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
@@ -146,7 +149,7 @@
   
   <span class="sidebar-brand-text">IDRA laboratory - Open Knowledge  documentation</span>
   
-</a><form class="sidebar-search-container" method="get" action="#" role="search">
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
@@ -181,7 +184,8 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -195,17 +199,39 @@
           </label>
         </div>
         <article role="main">
-          
-<noscript>
-<div class="admonition error">
-  <p class="admonition-title">Error</p>
-  <p>
-    Please activate JavaScript to enable the search functionality.
-  </p>
+          <section id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">#</a></h1>
+<p>The repository is organized as follows:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>.
+├──<span class="w"> </span>01_ros_2
+│<span class="w">   </span>├──<span class="w"> </span>00_index.rst
+│<span class="w">   </span>├──<span class="w"> </span>01_CLI
+│<span class="w">   </span>│<span class="w">   </span>└──<span class="w"> </span>00_index.rst
+│<span class="w">   </span>└──<span class="w"> </span>02_Packages
+│<span class="w">       </span>├──<span class="w"> </span>00_index.rst
+│<span class="w">       </span>├──<span class="w"> </span>01_workspace.rst
+│<span class="w">       </span>├──<span class="w"> </span>02_pkg_creation.rst
+│<span class="w">       </span>└──<span class="w"> </span>03_launch_files.rst
+├──<span class="w"> </span>02_linux
+│<span class="w">   </span>├──<span class="w"> </span>00_index.rst
+│<span class="w">   </span>├──<span class="w"> </span>01_topic
+│<span class="w">   </span>└──<span class="w"> </span>02_topic
+├──<span class="w"> </span>conf.py
+├──<span class="w"> </span>CONTRIBUTING.md
+├──<span class="w"> </span>index.rst
+└──<span class="w"> </span>README.md
+</pre></div>
 </div>
-</noscript>
-
-<div id="search-results"></div>
+<p><code class="docutils literal notranslate"><span class="pre">conf.py</span></code> is the python script that configure <em>sphinx</em> for the html generation, while
+<code class="docutils literal notranslate"><span class="pre">index.rst</span></code> is the main entry point for the web page.</p>
+<p>To add more contents, follow the presented structure where new <em>topics</em> are wrote
+into a separate folder with a 2 digit number prefix. Always provide a <code class="docutils literal notranslate"><span class="pre">00_index.rst</span></code>
+to simplify the recursive imports.</p>
+<p>Documentation is build in reStructured Text (<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html">documentation</a>;
+even though Markdown could be used (as it can be seen in <code class="docutils literal notranslate"><span class="pre">index.rst</span></code>), lot of <a class="reference external" href="https://www.zverovich.net/2016/06/16/rst-vs-markdown.html">discussions</a>
+points out that rST is more extensible and is more suitable for scaling project documentation.
+Furthermore, it is the default choice of sphinx.</p>
+</section>
 
         </article>
       </div>
@@ -244,8 +270,5 @@
     <script src="_static/scripts/furo.js?v=32e29ea5"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
-    
-<script src="_static/searchtools.js"></script>
-<script src="_static/language_data.js"></script>
-<script src="searchindex.js"></script></body>
+    </body>
 </html>
