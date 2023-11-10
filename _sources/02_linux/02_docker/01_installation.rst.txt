@@ -1,3 +1,5 @@
+.. _docker-installation:
+
 Installation
 ------------
 
