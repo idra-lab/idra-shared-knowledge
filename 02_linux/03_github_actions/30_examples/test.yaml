@@ -1,0 +1,6 @@
+name: Matteo
+
+on:
+  push:
+    branch:
+      - main
