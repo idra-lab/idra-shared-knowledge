@@ -3,6 +3,7 @@
 This repository tries to condense knowledge that could be useful to everyone accessing
 the laboratory.
 
+Online webpage [here](https://idra-lab.github.io/idra-shared-knowledge/).
 
 
 ## Build the documentation
@@ -20,3 +21,5 @@ Finally to build the documentation inside the `html` folder
 ```
 sphinx-build . html
 ```
+
+To load the local version of the documentation open `html/index.html`.
