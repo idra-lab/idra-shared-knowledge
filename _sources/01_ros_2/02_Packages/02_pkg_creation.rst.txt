@@ -103,3 +103,56 @@ A fundamental step is to add the executable to the ``setup.py`` file, in the
 In particular the ``<executable_name>`` is the name of the executable that needs to be
 called in the *launch* file ``<script_name>`` is the name of the script file that has
 been developed (and do not necessarily needs to be the same as the executable name).
+
+C++ package creation
+--------------------
+*C++* packages can be create similarly to python ones just by changing the build type
+
+.. code-block:: shell
+
+   ros2 pkg create --build-type ament_cmake <package_name> --dependencies <dependencies>
+
+In this case the resulting package structure is different:
+
+.. code-block:: shell
+
+   /workspace/src/<package_name>
+   ├── CMakeLists.txt
+   ├── include
+   │   └── <package_name>
+   ├── package.xml
+   └── src
+
+Applications (*.cpp* files) should be developed inside the *src* folder, while the
+*include* folder should contain the header files.
+
+CMake integration
+^^^^^^^^^^^^^^^^^
+
+Once source code is developed, the CMake file must be updated in order to correctly build
+and install the targets:
+
+Once source code is developed, the CMake file must be updated in order to correctly build
+and install the targets. Bare example to add
+
+.. code-block:: CMake
+
+   # Initialixe the executable my_node with the source code simple_node.cpp
+   add_executable(my_node src/simple_node.cpp)
+   ament_target_dependencies(my_node rclcpp)        # add dependency to rclcpp
+
+   install( # copy target to the lib folder inside the install space
+      TARGETS my_node
+      DESTINATION lib/${PROJECT_NAME}
+   )
+
+   install( # copy launch files to the share folder inside the install space
+      DIRECTORY launch
+      DESTINATION share/${PROJECT_NAME}
+   )
+
+.. note::
+
+   The name of the target is the one that should be used as executable name in the launch file.
+   It is assumed that launch files are placed inside the *launch* folder and the
+   *install* directive must be inserted to copy them to the install space.
