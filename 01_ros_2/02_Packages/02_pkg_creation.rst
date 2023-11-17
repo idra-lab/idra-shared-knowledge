@@ -61,6 +61,10 @@ as shown here
        (os.path.join('share', package_name), glob('launch/*.launch.py')),
    ],
 
+If particular ``data_files`` is a list of tuple. Each tuple contains the destination
+path on which data will be copied (relative to the *install* space of the ROS workspace),
+while the second element is a list of files to be copied (relative to the package source root).
+In this particular case we *glob* all launch files that are included in the *launch* folder.
 
 Adding executables
 ^^^^^^^^^^^^^^^^^^
