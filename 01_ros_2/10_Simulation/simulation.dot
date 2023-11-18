@@ -1,0 +1,11 @@
+digraph G {
+   rankdir=LR;
+   "/controller_manager";
+   "/motion_control_handle"     -> "/cartesian_motion_controller"   [label="/target_frame"];
+   "/joint_state_broadcaster"   -> "/robot_state_publisher"         [label="/joint_states"];
+   "/robot_state_publisher"     -> "/transform_listener_impl_<#1>"  [label="/tf_static"];
+   "/robot_state_publisher"     -> "/transform_listener_impl_<#1>"  [label="/tf"];
+   "/sim_ros2_interface"        -> "/transform_listener_impl_<#1>"  [label="/tf"];
+   "/sim_ros2_interface"        -> "/robot_controller"              [label="/coppelia_joint_joints"];
+   "/robot_controller"          -> "/sim_ros2_interface"            [label="/coppelia_set_joints"];
+}
