@@ -323,44 +323,44 @@ to be served by GitHub Pages.</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text">sphinx-build.yml</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sphinx Pages Builder</span>
-<span class="linenos"> 2</span>
-<span class="linenos"> 3</span><span class="c1"># The static web page should be built only on push on the main branch</span>
-<span class="linenos"> 4</span><span class="nt">on</span><span class="p">:</span>
-<span class="linenos"> 5</span><span class="w">  </span><span class="nt">push</span><span class="p">:</span>
-<span class="linenos"> 6</span><span class="w">    </span><span class="nt">branches</span><span class="p">:</span>
-<span class="linenos"> 7</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
-<span class="linenos"> 8</span>
-<span class="linenos"> 9</span><span class="nt">jobs</span><span class="p">:</span>
-<span class="linenos">10</span><span class="w">  </span><span class="nt">sphinx-build</span><span class="p">:</span>
-<span class="linenos">11</span>
-<span class="linenos">12</span><span class="w">    </span><span class="c1"># Use a Ubuntu 22.04 runner</span>
-<span class="linenos">13</span><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-22.04</span>
-<span class="linenos">14</span>
-<span class="linenos">15</span><span class="w">    </span><span class="c1"># Required to write GitHub pages</span>
-<span class="linenos">16</span><span class="w">    </span><span class="nt">permissions</span><span class="p">:</span>
-<span class="linenos">17</span><span class="w">      </span><span class="nt">contents</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">write</span>
-<span class="linenos">18</span>
-<span class="linenos">19</span><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<span class="linenos">20</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Checkout code</span>
-<span class="linenos">21</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
-<span class="linenos">22</span>
-<span class="linenos">23</span><span class="w">      </span><span class="c1"># git is not provided by the ubuntu image by defauls</span>
-<span class="linenos">24</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install git</span>
-<span class="linenos">25</span><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="linenos">26</span><span class="w">          </span><span class="no">sudo apt-get update</span>
-<span class="linenos">27</span><span class="w">          </span><span class="no">sudo apt-get install -y git</span>
-<span class="linenos">28</span>
-<span class="linenos">29</span><span class="w">      </span><span class="c1"># set-up python 3.10 using the action script</span>
-<span class="linenos">30</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up Python</span>
-<span class="linenos">31</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v4</span>
-<span class="linenos">32</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
-<span class="linenos">33</span><span class="w">          </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.10&#39;</span>
-<span class="linenos">34</span>
-<span class="linenos">35</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install python depencencies</span>
-<span class="linenos">36</span><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip3 install sphinx furo sphinx-copybutton myst-parser</span>
-<span class="linenos">37</span>
-<span class="linenos">38</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build docs</span>
-<span class="linenos">39</span><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sphinx-build . html</span>
+<span class="linenos"> 2</span><span class="c1"># The static web page should be built only on push on the main branch</span>
+<span class="linenos"> 3</span><span class="nt">on</span><span class="p">:</span>
+<span class="linenos"> 4</span><span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+<span class="linenos"> 5</span><span class="w">    </span><span class="nt">branches</span><span class="p">:</span>
+<span class="linenos"> 6</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="nt">jobs</span><span class="p">:</span>
+<span class="linenos"> 9</span><span class="w">  </span><span class="nt">sphinx-build</span><span class="p">:</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="w">    </span><span class="c1"># Use a Ubuntu 22.04 runner</span>
+<span class="linenos">12</span><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-22.04</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="w">    </span><span class="c1"># Required to write GitHub pages</span>
+<span class="linenos">15</span><span class="w">    </span><span class="nt">permissions</span><span class="p">:</span>
+<span class="linenos">16</span><span class="w">      </span><span class="nt">contents</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">write</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="linenos">19</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Checkout code</span>
+<span class="linenos">20</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span><span class="w">      </span><span class="c1"># git is not provided by the ubuntu image by defauls</span>
+<span class="linenos">23</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install git</span>
+<span class="linenos">24</span><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="linenos">25</span><span class="w">          </span><span class="no">sudo apt-get update</span>
+<span class="linenos">26</span><span class="w">          </span><span class="no">sudo apt-get install -y git graphviz</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="w">      </span><span class="c1"># set-up python 3.10 using the action script</span>
+<span class="linenos">29</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up Python</span>
+<span class="linenos">30</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v4</span>
+<span class="linenos">31</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<span class="linenos">32</span><span class="w">          </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.10&#39;</span>
+<span class="linenos">33</span>
+<span class="linenos">34</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install python depencencies</span>
+<span class="linenos">35</span><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip3 install sphinx furo sphinx-copybutton myst-parser</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build docs</span>
+<span class="linenos">38</span><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="linenos">39</span><span class="w">          </span><span class="no">TZ=UTC sphinx-build . html</span>
 <span class="linenos">40</span>
 <span class="linenos">41</span><span class="w">      </span><span class="c1"># Use a custom script to deply the html folder for pages</span>
 <span class="linenos">42</span><span class="w">      </span><span class="c1"># https://github.com/peaceiris/actions-gh-pages</span>

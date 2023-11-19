@@ -207,7 +207,7 @@
 <span id="simulation-setup-example"></span><h1>Simulation Setup<a class="headerlink" href="#simulation-setup" title="Link to this heading">#</a></h1>
 <p>Setting up a simulation requires a lot of different nodes that interact with each other.
 The following is a graph showing nodes (and associated relationships) used in a simulation.</p>
-digraph G {
+<div align="center" class="align-center"><div class="graphviz"><img src="../../_images/graphviz-9c37651f6491873afac6f312db4a982dc7558832.png" alt="digraph G {
    rankdir=LR;
    &quot;/controller_manager&quot;;
    &quot;/motion_control_handle&quot;     -&gt; &quot;/cartesian_motion_controller&quot;   [label=&quot;/target_frame&quot;];
@@ -217,7 +217,8 @@ digraph G {
    &quot;/sim_ros2_interface&quot;        -&gt; &quot;/transform_listener_impl_&lt;#1&gt;&quot;  [label=&quot;/tf&quot;];
    &quot;/sim_ros2_interface&quot;        -&gt; &quot;/robot_controller&quot;              [label=&quot;/coppelia_joint_joints&quot;];
    &quot;/robot_controller&quot;          -&gt; &quot;/sim_ros2_interface&quot;            [label=&quot;/coppelia_set_joints&quot;];
-}
+}" class="graphviz" /></div>
+</div>
 <section id="node-description">
 <h2>Node description<a class="headerlink" href="#node-description" title="Link to this heading">#</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">/joint_state_broadcaster</span></code> node is part of the <a class="reference external" href="https://control.ros.org/humble/index.html">ROS2 control package</a>.
