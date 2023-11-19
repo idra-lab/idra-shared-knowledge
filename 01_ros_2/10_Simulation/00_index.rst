@@ -1,3 +1,5 @@
+.. _simulation_setup_example:
+
 ================
 Simulation Setup
 ================
@@ -9,3 +11,4 @@ The following is a graph showing nodes (and associated relationships) used in a 
    :align: center
 
 .. include:: 01_node_desc.rst
+.. include:: 02_launch_file.rst
