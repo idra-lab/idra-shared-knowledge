@@ -9,6 +9,7 @@
         <title>Package creation - IDRA laboratory - Open Knowledge documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -159,11 +160,13 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../00_index.html">ROS2 Notes</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ROS2 Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../01_CLI/00_index.html">CLI Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="00_index.html">Workspaces and Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_Simulation/00_index.html">Simulation Setup</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../02_linux/00_index.html">Linux and other Utilities</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Linux and other Utilities</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../02_linux/02_docker/00_index.html">Docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../02_linux/03_github_actions/00_index.html">Github Actions for CI/CD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_linux/10_coppelia/00_index.html">Coppelia Simulator</a></li>
 </ul>
 </li>
 </ul>
@@ -251,6 +254,10 @@ as shown here</p>
 <span class="p">],</span>
 </pre></div>
 </div>
+<p>If particular <code class="docutils literal notranslate"><span class="pre">data_files</span></code> is a list of tuple. Each tuple contains the destination
+path on which data will be copied (relative to the <em>install</em> space of the ROS workspace),
+while the second element is a list of files to be copied (relative to the package source root).
+In this particular case we <em>glob</em> all launch files that are included in the <em>launch</em> folder.</p>
 </section>
 <section id="adding-executables">
 <h3>Adding executables<a class="headerlink" href="#adding-executables" title="Link to this heading">#</a></h3>

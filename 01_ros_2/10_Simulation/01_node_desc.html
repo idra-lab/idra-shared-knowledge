@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>Installation - IDRA laboratory - Open Knowledge documentation</title>
+        <title>Node description - IDRA laboratory - Open Knowledge documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
@@ -157,16 +157,16 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../01_ros_2/00_index.html">ROS2 Notes</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ROS2 Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../01_ros_2/01_CLI/00_index.html">CLI Tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../01_ros_2/02_Packages/00_index.html">Workspaces and Packages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../01_ros_2/10_Simulation/00_index.html">Simulation Setup</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../00_index.html">ROS2 Notes</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ROS2 Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_CLI/00_index.html">CLI Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_Packages/00_index.html">Workspaces and Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00_index.html">Simulation Setup</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../00_index.html">Linux and other Utilities</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Linux and other Utilities</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="00_index.html">Docker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../03_github_actions/00_index.html">Github Actions for CI/CD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../10_coppelia/00_index.html">Coppelia Simulator</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../02_linux/00_index.html">Linux and other Utilities</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Linux and other Utilities</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../02_linux/02_docker/00_index.html">Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_linux/03_github_actions/00_index.html">Github Actions for CI/CD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_linux/10_coppelia/00_index.html">Coppelia Simulator</a></li>
 </ul>
 </li>
 </ul>
@@ -203,37 +203,31 @@
           </label>
         </div>
         <article role="main">
-          <section id="installation">
-<span id="docker-installation"></span><h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h1>
-<p>For more details follow the <a class="reference external" href="https://docs.docker.com/engine/install/ubuntu/">official installation guide</a>
-to install in Ubuntu. In essence</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Add Docker&#39;s official GPG key:
-sudo apt-get update
-sudo apt-get install ca-certificates curl gnupg
-sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-sudo chmod a+r /etc/apt/keyrings/docker.gpg
-
-# Add the repository to Apt sources:
-echo \
-  &quot;deb [arch=&quot;$(dpkg --print-architecture)&quot; signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  &quot;$(. /etc/os-release &amp;&amp; echo &quot;$VERSION_CODENAME&quot;)&quot; stable&quot; | \
-  sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
-sudo apt-get update
-
-# Install docker packages:
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you plan to use docker as github runner for CI/CD, provide privileges to the
-<em>docker.sock</em> files:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">chmod</span> <span class="mi">666</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span>
-</pre></div>
-</div>
-<p>More details <a class="reference external" href="https://stacktuts.com/got-permission-denied-while-trying-to-connect-to-the-docker-daemon-socket-at-unix-var-run-docker-sock-get-http-2fvar-2frun-2fdocker-sock-v1-24-version-dial-unix-var-run-docker-sock-connect-permission-denied">here</a>.</p>
-</div>
+          <section id="node-description">
+<h1>Node description<a class="headerlink" href="#node-description" title="Link to this heading">#</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">/joint_state_broadcaster</span></code> node is part of the <a class="reference external" href="https://control.ros.org/humble/index.html">ROS2 control package</a>.
+More details can be found <a class="reference external" href="https://control.ros.org/humble/doc/ros2_controllers/joint_state_broadcaster/doc/userdoc.html">here</a>,
+but essentially the broadcaster reads all state interfaces and reports them on the <code class="docutils literal notranslate"><span class="pre">/joint_states</span></code> topic.</p>
+<p>Such data is collected by the <code class="docutils literal notranslate"><span class="pre">/robot_state_publisher</span></code> node (package <a class="reference external" href="https://github.com/ros/robot_state_publisher">Robot State
+Publisher</a>) that combines the knowledge of
+the robot’s kinematics to publish the full tree of transformations for the different links
+on the topics <code class="docutils literal notranslate"><span class="pre">/tf</span></code> and <code class="docutils literal notranslate"><span class="pre">/tf_static</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">/motion_control_handle</span></code> node is still part of ROS2 control, but in this case it
+spawns an handle that can be moved in RViz that specifies the target position of the robot;
+the information is published on the <code class="docutils literal notranslate"><span class="pre">/target_frame</span></code> topic.</p>
+<p>The target is collected by the <code class="docutils literal notranslate"><span class="pre">/cartesian_mototion_controller</span></code> node (generated by the
+ROS2 control package but can load any custom controller that implements the
+<code class="docutils literal notranslate"><span class="pre">CartesianMotionController</span></code> interface) that computes the commands to be sent to the
+robot.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">sim_ros2_interface</span></code> node is instead provided by <a class="reference internal" href="../../02_linux/10_coppelia/00_index.html#coppeliasim"><span class="std std-ref">CoppeliaSim</span></a> and
+is the bridge between the ROS2 world (in which the control is computed) and the Coppelia
+world (in which the system is simulated).</p>
+<p>As mentioned <a class="reference external" href="https://robotics.stackexchange.com/questions/104551/how-does-anything-listen-to-tf2-what-are-the-transform-listener-impl-nodes">here</a>,
+the <code class="docutils literal notranslate"><span class="pre">/transform_listener_impl_&lt;&gt;</span></code> nodes are automatically spawned in order to ensure
+a reliable transformation processing.</p>
+<p><strong>Note</strong>: missing the description of the <code class="docutils literal notranslate"><span class="pre">/robot_controller</span></code> node.</p>
+<p>Finally, the standalone <code class="docutils literal notranslate"><span class="pre">/controller_manager</span></code> node, from ROS2 control, is the key topic
+that needs to be enabled to manage the communication between the different control nodes.</p>
 </section>
 
         </article>

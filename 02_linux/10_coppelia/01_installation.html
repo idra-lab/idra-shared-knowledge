@@ -164,9 +164,9 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../00_index.html">Linux and other Utilities</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Linux and other Utilities</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="00_index.html">Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_docker/00_index.html">Docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../03_github_actions/00_index.html">Github Actions for CI/CD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../10_coppelia/00_index.html">Coppelia Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00_index.html">Coppelia Simulator</a></li>
 </ul>
 </li>
 </ul>
@@ -204,35 +204,27 @@
         </div>
         <article role="main">
           <section id="installation">
-<span id="docker-installation"></span><h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h1>
-<p>For more details follow the <a class="reference external" href="https://docs.docker.com/engine/install/ubuntu/">official installation guide</a>
-to install in Ubuntu. In essence</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Add Docker&#39;s official GPG key:
-sudo apt-get update
-sudo apt-get install ca-certificates curl gnupg
-sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-sudo chmod a+r /etc/apt/keyrings/docker.gpg
-
-# Add the repository to Apt sources:
-echo \
-  &quot;deb [arch=&quot;$(dpkg --print-architecture)&quot; signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  &quot;$(. /etc/os-release &amp;&amp; echo &quot;$VERSION_CODENAME&quot;)&quot; stable&quot; | \
-  sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
-sudo apt-get update
-
-# Install docker packages:
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h1>
+<p>Go to the <a class="reference external" href="https://www.coppeliarobotics.com/downloads">download</a> page of the Coppelia
+website and download the <em>CoppeliaSim Edu</em> version for Ubuntu 22.04.</p>
+<p>The software is provided as a tarball; in the following example, the software is installed
+in the <code class="docutils literal notranslate"><span class="pre">~/CoppeliaSim</span></code> directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>-xf<span class="w"> </span>~/Downloads/CoppeliaSim_Edu*
+mv<span class="w"> </span>CoppeliaSim_Edu*<span class="w"> </span>~/CoppeliaSim
+<span class="c1"># Optionally delete the tarball</span>
+rm<span class="w"> </span>~/Downloads/CoppeliaSim_Edu*.tar.xz
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you plan to use docker as github runner for CI/CD, provide privileges to the
-<em>docker.sock</em> files:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">chmod</span> <span class="mi">666</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span>
+<p>It is recommended to store the root directory of the CoppeliaSim installation as a
+environment variable, so that it can be easily accessed from the terminal and the rest
+of the presented code snippet can work with no problem. To do so add in the <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>
+file the line</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">COPPELIASIM_ROOT_DIR</span><span class="o">=</span><span class="nv">$HOME</span>/CoppeliaSim
 </pre></div>
 </div>
-<p>More details <a class="reference external" href="https://stacktuts.com/got-permission-denied-while-trying-to-connect-to-the-docker-daemon-socket-at-unix-var-run-docker-sock-get-http-2fvar-2frun-2fdocker-sock-v1-24-version-dial-unix-var-run-docker-sock-connect-permission-denied">here</a>.</p>
+<p>or, more simply, call the command</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;export COPPELIASIM_ROOT_DIR=</span><span class="nv">$HOME</span><span class="s2">/CoppeliaSim&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+</pre></div>
 </div>
 </section>
 

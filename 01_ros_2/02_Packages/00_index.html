@@ -3,12 +3,13 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Linux and other Utilities" href="../../02_linux/00_index.html" /><link rel="prev" title="CLI Tools" href="../01_CLI/00_index.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Simulation Setup" href="../10_Simulation/00_index.html" /><link rel="prev" title="CLI Tools" href="../01_CLI/00_index.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>Workspaces and Packages - IDRA laboratory - Open Knowledge documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -159,11 +160,13 @@
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../00_index.html">ROS2 Notes</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ROS2 Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01_CLI/00_index.html">CLI Tools</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Workspaces and Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_Simulation/00_index.html">Simulation Setup</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../02_linux/00_index.html">Linux and other Utilities</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Linux and other Utilities</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../02_linux/02_docker/00_index.html">Docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../02_linux/03_github_actions/00_index.html">Github Actions for CI/CD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_linux/10_coppelia/00_index.html">Coppelia Simulator</a></li>
 </ul>
 </li>
 </ul>
@@ -305,6 +308,10 @@ as shown here</p>
 <span class="p">],</span>
 </pre></div>
 </div>
+<p>If particular <code class="docutils literal notranslate"><span class="pre">data_files</span></code> is a list of tuple. Each tuple contains the destination
+path on which data will be copied (relative to the <em>install</em> space of the ROS workspace),
+while the second element is a list of files to be copied (relative to the package source root).
+In this particular case we <em>glob</em> all launch files that are included in the <em>launch</em> folder.</p>
 </section>
 <section id="adding-executables">
 <h4>Adding executables<a class="headerlink" href="#adding-executables" title="Link to this heading">#</a></h4>
@@ -420,12 +427,12 @@ can be started.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../../02_linux/00_index.html">
+          <a class="next-page" href="../10_Simulation/00_index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Linux and other Utilities</div>
+                <div class="title">Simulation Setup</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>

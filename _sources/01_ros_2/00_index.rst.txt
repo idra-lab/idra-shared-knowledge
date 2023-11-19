@@ -11,6 +11,7 @@ For further information follow the `official documentation <https://docs.ros.org
 
    01_CLI/00_index.rst
    02_Packages/00_index.rst
+   10_Simulation/00_index.rst
 
 
 Installation
