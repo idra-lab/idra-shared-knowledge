@@ -1,5 +1,4 @@
 name: Sphinx Pages Builder
-
 # The static web page should be built only on push on the main branch
 on:
   push:
@@ -24,7 +23,7 @@ jobs:
       - name: Install git
         run: |
           sudo apt-get update
-          sudo apt-get install -y git
+          sudo apt-get install -y git graphviz
 
       # set-up python 3.10 using the action script
       - name: Set up Python
@@ -36,7 +35,8 @@ jobs:
         run: pip3 install sphinx furo sphinx-copybutton myst-parser
 
       - name: Build docs
-        run: sphinx-build . html
+        run: |
+          TZ=UTC sphinx-build . html
 
       # Use a custom script to deply the html folder for pages
       # https://github.com/peaceiris/actions-gh-pages
