@@ -32,3 +32,18 @@ simulator with
    coppeliasim_dir = os.environ["COPPELIASIM_ROOT_DIR"]
    scene = "/path/to/scene.ttt"
    subprocess.Popen([f"{coppeliasim_dir}/coppeliaSim.sh", scene])
+
+Combining the 2 scripts one could do
+
+.. code-block:: python
+
+   import os
+   import psutil
+   import subprocess
+
+   if "coppeliaSim" not in (p.name() for p in psutil.process_iter()):
+       coppeliasim_dir = os.environ["COPPELIASIM_ROOT_DIR"]
+       scene = "/path/to/scene.ttt"
+       subprocess.Popen([f"{coppeliasim_dir}/coppeliaSim.sh", scene],
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL)
