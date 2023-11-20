@@ -14,3 +14,5 @@ in ROS2.
 
 .. include:: 01_installation.rst
 .. include:: 02_ros2_integration.rst
+.. include:: 03_zeromq.rst
+.. include:: 10_tips.rst
