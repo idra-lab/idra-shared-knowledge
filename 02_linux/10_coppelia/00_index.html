@@ -210,7 +210,7 @@ in ROS2.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Installation and integration with ROS2 sections are based on notes provided by
-<a class="reference external" href="https://github.com/Hydran00">Davide Nardi</a>.</p>
+<a class="reference external" href="https://github.com/Hydran00">Davide Nardi</a> and <a class="reference external" href="https://github.com/lucabeber">Luca Beber</a>.</p>
 </div>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
@@ -236,8 +236,8 @@ file the line</p>
 </pre></div>
 </div>
 </section>
-<section id="ros2-integration">
-<h2>ROS2 integration<a class="headerlink" href="#ros2-integration" title="Link to this heading">#</a></h2>
+<section id="ros2-setup">
+<h2>ROS2 Setup<a class="headerlink" href="#ros2-setup" title="Link to this heading">#</a></h2>
 <section id="messages">
 <h3>Messages<a class="headerlink" href="#messages" title="Link to this heading">#</a></h3>
 <p>CoppeliaSim has a ros2 workspace internally which is used to build required ROS2 messages.
@@ -296,6 +296,244 @@ colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install
 </div>
 </section>
 </section>
+<section id="ros2-simulation-interface">
+<h2>ROS2 simulation interface<a class="headerlink" href="#ros2-simulation-interface" title="Link to this heading">#</a></h2>
+<p>Coppelia does not provide a <em>standard</em> interface with the ROS simulator, but nodes must
+be programmed in the Coppelia environment to exchange data.</p>
+<p>For this purpose, the preferred scripting language is <a class="reference external" href="https://www.lua.org/">LUA</a>, which
+is faster than Python (that’s another alternative in Coppelia).</p>
+<p>Scritps are bounded to objects in Coppelia: for this reason it is recommended to write code
+that belongs to the object itself, and not to the scene, so that if the entity is copied
+and pasted in other projects, the programmed interface is preserved.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To see the list of all available API function, look
+<a class="reference external" href="https://www.coppeliarobotics.com/helpFiles/en/apiFunctions.htm">here</a>.</p>
+</div>
+<section id="robot-simulation">
+<span id="coppeliasim-ros2-robot-script"></span><h3>Robot simulation<a class="headerlink" href="#robot-simulation" title="Link to this heading">#</a></h3>
+<p>This is an example scritp for a kinematic simulation of a robot in Coppelia that provide
+a good understanding of the interface principle. Here the code will be splitted up and
+explained in details; the whole script can be found <a class="reference internal" href="02_ros2_integration/02b_robot_interface_example.html#ros2-robot-integration"><span class="std std-ref">here</span></a>.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">function</span> <span class="nc">table</span><span class="p">.</span><span class="nf">fill</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">t</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="kr">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="kr">do</span>
+        <span class="nb">table.insert</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="kr">end</span>
+    <span class="kr">return</span> <span class="n">t</span>
+<span class="kr">end</span>
+</pre></div>
+</div>
+<p>This is a simple used-defined function that allows to initialize a table with <code class="docutils literal notranslate"><span class="pre">n</span></code> equal
+elements <code class="docutils literal notranslate"><span class="pre">value</span></code>; this is useful, as example, for the initialization of the joint handles or maximum
+joint properties</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">q_home</span> <span class="o">=</span> <span class="p">{</span><span class="mf">1.57</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.57</span><span class="p">,</span> <span class="mf">1.57</span> <span class="p">,</span> <span class="o">-</span><span class="mf">1.57</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.57</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">}</span>
+<span class="n">joints</span> <span class="o">=</span> <span class="n">table</span><span class="p">.</span><span class="n">fill</span><span class="p">(</span><span class="kc">nil</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">q_home</span>
+<span class="kd">local</span> <span class="n">max_vel</span> <span class="o">=</span> <span class="n">table</span><span class="p">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">180</span> <span class="o">*</span> <span class="nb">math.pi</span> <span class="o">/</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">max_acc</span> <span class="o">=</span> <span class="n">table</span><span class="p">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">40</span> <span class="o">*</span> <span class="nb">math.pi</span> <span class="o">/</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">max_jerk</span> <span class="o">=</span> <span class="n">table</span><span class="p">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">80</span> <span class="o">*</span> <span class="nb">math.pi</span> <span class="o">/</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here it is reported the initialization of main variables; <code class="docutils literal notranslate"><span class="pre">q_home</span></code> is the home configuration
+of the robot (in the joint space), while <code class="docutils literal notranslate"><span class="pre">joints</span></code> is is a placeholder that will contain
+the Coppelia handles of the joints of the robot (i.e. the joint object inside the Coppelia
+object tree).
+For sake of simplicity, the initial target is set to the home configuration, while joint
+limits (for both velocity, acceleration and jerk) are initialized to values that are
+constant for all joints.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">function</span> <span class="nf">apply_joint_position</span><span class="p">(</span><span class="n">ros_msg</span><span class="p">)</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">ros_msg</span><span class="p">.</span><span class="n">data</span>
+    <span class="kr">if</span><span class="p">(</span><span class="nb">tostring</span><span class="p">(</span><span class="n">target</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="s2">&quot;nan&quot;</span><span class="p">)</span> <span class="kr">then</span>
+        <span class="kr">return</span>
+    <span class="kr">end</span>
+    <span class="n">msg_received</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="kr">end</span>
+</pre></div>
+</div>
+<p>This function is the callback from the ROS2 subscriber (that will be initialized later);
+it takes the desired joint configuration for the system and sets the <code class="docutils literal notranslate"><span class="pre">target</span></code> accordingly.
+The <code class="docutils literal notranslate"><span class="pre">msg_received</span></code> boolean flag is used to assert when a new correct message is arrived.
+After processing of during the actuation step of the simulation, the flag will be set to <code class="docutils literal notranslate"><span class="pre">false</span></code> again.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">function</span> <span class="nf">move_to_config</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">max_vel</span><span class="p">,</span> <span class="n">max_acc</span><span class="p">,</span> <span class="n">max_jerk</span><span class="p">,</span> <span class="n">target_pos</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">current_pos</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="kd">local</span> <span class="n">current_vel</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="kr">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="o">#</span><span class="n">handles</span><span class="p">,</span><span class="mi">1</span> <span class="kr">do</span>
+        <span class="n">current_pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sim</span><span class="p">.</span><span class="n">getJointPosition</span><span class="p">(</span><span class="n">handles</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">current_vel</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sim</span><span class="p">.</span><span class="n">getJointVelocity</span><span class="p">(</span><span class="n">handles</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="kr">end</span>
+
+    <span class="n">sim</span><span class="p">.</span><span class="n">moveToConfig</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">current_pos</span><span class="p">,</span> <span class="n">current_vel</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="n">max_vel</span><span class="p">,</span> <span class="n">max_acc</span><span class="p">,</span> <span class="n">max_jerk</span><span class="p">,</span>
+                     <span class="n">target_pos</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="n">mov_callback</span><span class="p">,</span> <span class="n">handles</span><span class="p">)</span>
+<span class="kr">end</span>
+
+<span class="kr">function</span> <span class="nf">mov_callback</span><span class="p">(</span><span class="n">target_pos</span><span class="p">,</span><span class="n">vel</span><span class="p">,</span><span class="n">acc</span><span class="p">,</span><span class="n">handles</span><span class="p">)</span>
+    <span class="kr">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="o">#</span><span class="n">handles</span><span class="p">,</span> <span class="mi">1</span> <span class="kr">do</span>
+            <span class="n">sim</span><span class="p">.</span><span class="n">setJointTargetPosition</span><span class="p">(</span><span class="n">handles</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">target_pos</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
+</pre></div>
+</div>
+<p>This function implements the interface with coppelia that sets the target joint configuration
+for the kinematic simulation of the robot. The <code class="docutils literal notranslate"><span class="pre">handles</span></code> are the joints that are commanded
+with the specified joint limits. Internally the function collects the current state of
+the robot (i.e. joint position and velocity) and calls the built-in <code class="docutils literal notranslate"><span class="pre">sim.moveToConfig</span></code>
+<a class="reference external" href="https://www.coppeliarobotics.com/helpFiles/en/regularApi/simMoveToConfig.htm">documented here</a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">mov_callback</span></code> function is the callback that processes the result of the <code class="docutils literal notranslate"><span class="pre">sim.moveToConfig</span></code>.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">function</span> <span class="nf">sysCall_init</span><span class="p">()</span>
+    <span class="kr">if</span> <span class="n">simROS2</span> <span class="kr">then</span>
+        <span class="n">publisher</span> <span class="o">=</span> <span class="n">simROS2</span><span class="p">.</span><span class="n">createPublisher</span><span class="p">(</span>
+            <span class="s1">&#39;/coppelia_joint_states&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;sensor_msgs/msg/JointState&#39;</span>
+            <span class="p">)</span>
+        <span class="n">subscriber</span> <span class="o">=</span> <span class="n">simROS2</span><span class="p">.</span><span class="n">createSubscription</span><span class="p">(</span>
+            <span class="s1">&#39;/coppelia_set_joints&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;std_msgs/msg/Float64MultiArray&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;apply_joint_position&#39;</span>
+            <span class="p">)</span>
+    <span class="kr">end</span>
+
+    <span class="n">joints</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sim</span><span class="p">.</span><span class="n">getObject</span><span class="p">(</span><span class="s1">&#39;/shoulder_pan_joint&#39;</span><span class="p">)</span>
+    <span class="n">joints</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">sim</span><span class="p">.</span><span class="n">getObject</span><span class="p">(</span><span class="s1">&#39;/shoulder_lift_joint&#39;</span><span class="p">)</span>
+    <span class="n">joints</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">sim</span><span class="p">.</span><span class="n">getObject</span><span class="p">(</span><span class="s1">&#39;/elbow_joint&#39;</span><span class="p">)</span>
+    <span class="n">joints</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">sim</span><span class="p">.</span><span class="n">getObject</span><span class="p">(</span><span class="s1">&#39;/wrist_1_joint&#39;</span><span class="p">)</span>
+    <span class="n">joints</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">sim</span><span class="p">.</span><span class="n">getObject</span><span class="p">(</span><span class="s1">&#39;/wrist_2_joint&#39;</span><span class="p">)</span>
+    <span class="n">joints</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="n">sim</span><span class="p">.</span><span class="n">getObject</span><span class="p">(</span><span class="s1">&#39;/wrist_3_joint&#39;</span><span class="p">)</span>
+
+    <span class="n">move_to_config</span><span class="p">(</span><span class="n">joints</span><span class="p">,</span> <span class="n">max_vel</span><span class="p">,</span> <span class="n">max_acc</span><span class="p">,</span> <span class="n">max_jerk</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="n">msg_received</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="kr">end</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">sysCall_init</span></code> function is the initialization function that is called automatically
+by Coppelia at the beginning of the simulation, thus is used to initialize different elements.</p>
+<p>In this case a ROS2 topic subscriber and publisher are initialized; the former reads
+the desired joint configuration (that’s actually computer by a ROS controller) while the
+latter publishes the current joint configuration of the robot.</p>
+<p>Then, the <code class="docutils literal notranslate"><span class="pre">joints</span></code> handler are initialized by binding the associated Coppelia objects.
+Furthermore, the robot is initially commanded to reach the home configuration.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">function</span> <span class="nf">sysCall_actuation</span><span class="p">()</span>
+    <span class="kr">if</span> <span class="n">msg_received</span> <span class="o">==</span> <span class="kc">true</span> <span class="kr">then</span>
+        <span class="n">move_to_config</span><span class="p">(</span><span class="n">joints</span><span class="p">,</span> <span class="n">max_vel</span><span class="p">,</span> <span class="n">max_acc</span><span class="p">,</span> <span class="n">max_jerk</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="n">msg_received</span> <span class="o">=</span> <span class="kc">false</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">sysCall_actuation</span></code> is the function that is called at each actuation step of the
+simulation. In this case it checks if a new target position has been received from the
+publisher and, if so, it calls the <code class="docutils literal notranslate"><span class="pre">move_to_config</span></code> function to update the simulation
+target state.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">function</span> <span class="nf">sysCall_sensing</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">curr_pos</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="kd">local</span> <span class="n">curr_vel</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="kd">local</span> <span class="n">curr_torque</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="kr">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">#</span><span class="n">joints</span><span class="p">,</span> <span class="mi">1</span> <span class="kr">do</span>
+        <span class="n">curr_pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sim</span><span class="p">.</span><span class="n">getJointPosition</span><span class="p">(</span><span class="n">joints</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">curr_vel</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sim</span><span class="p">.</span><span class="n">getJointVelocity</span><span class="p">(</span><span class="n">joints</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">curr_torque</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sim</span><span class="p">.</span><span class="n">getJointForce</span><span class="p">(</span><span class="n">joints</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="kr">end</span>
+
+    <span class="kd">local</span> <span class="n">msg</span> <span class="o">=</span><span class="p">{</span>
+        <span class="n">header</span><span class="o">=</span><span class="p">{</span>
+            <span class="n">stamp</span> <span class="o">=</span> <span class="n">simROS2</span><span class="p">.</span><span class="n">getSystemTime</span><span class="p">(),</span>
+            <span class="n">frame_id</span> <span class="o">=</span> <span class="s1">&#39;robot_base&#39;</span>
+        <span class="p">},</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;shoulder_pan_joint&#39;</span><span class="p">,</span> <span class="s1">&#39;shoulder_lif_joint&#39;</span><span class="p">,</span> <span class="s1">&#39;elbow_joint&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;wrist_1_joint&#39;</span><span class="p">,</span> <span class="s1">&#39;wrist_2_joint&#39;</span><span class="p">,</span> <span class="s1">&#39;wrist_3_joint&#39;</span>
+        <span class="p">},</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="n">curr_pos</span><span class="p">,</span>
+        <span class="n">velocity</span> <span class="o">=</span> <span class="n">curr_vel</span><span class="p">,</span>
+        <span class="n">effort</span> <span class="o">=</span> <span class="n">curr_torque</span>
+    <span class="p">}</span>
+    <span class="n">simROS2</span><span class="p">.</span><span class="n">publish</span><span class="p">(</span><span class="n">publisher</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+<span class="kr">end</span>
+</pre></div>
+</div>
+<p>Finally, the <code class="docutils literal notranslate"><span class="pre">sysCall_sensing</span></code> function is called at each sensing step of the simulation;
+in this case it reads the current joint configuration and publishes it to the ROS2 topic
+as defined in the initialization.</p>
+</section>
+</section>
+<section id="zeromq-remote-api">
+<h2>ZeroMQ remote API<a class="headerlink" href="#zeromq-remote-api" title="Link to this heading">#</a></h2>
+<p>As described <a class="reference external" href="https://www.coppeliarobotics.com/helpFiles/en/zmqRemoteApiOverview.htm">here</a>
+Coppelia provides a remote API based on ZeroMQ.
+This can be used to control the flow of the simulation, and in particular it can call
+all <a class="reference external" href="https://www.coppeliarobotics.com/helpFiles/en/apiFunctions.htm">regular API</a> functions
+that are available within the Coppelia environment.</p>
+<section id="id2">
+<h3>Installation<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>Coppelia provides a python package for accessing the ZeroMQ remote API that can be installed
+as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>coppeliasim-zmqremoteapi-client
+</pre></div>
+</div>
+</section>
+<section id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h3>
+<p>The following is a simple python examples that ensures that a scene is loaded, it automatically
+starts the simulation and it waits until the simulation time reaches 10 seconds before stopping
+it.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">coppeliasim_zmqremoteapi_client</span> <span class="kn">import</span> <span class="n">RemoteAPIClient</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">RemoteAPIClient</span><span class="p">()</span>
+<span class="n">sim</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s2">&quot;sim&quot;</span><span class="p">)</span>
+
+<span class="n">sim</span><span class="o">.</span><span class="n">loadScene</span><span class="p">(</span><span class="s2">&quot;/path/to/scene.ttt&quot;</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">startSimulation</span><span class="p">()</span>
+
+<span class="k">while</span> <span class="n">sim</span><span class="o">.</span><span class="n">getSimulationTime</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="n">sim</span><span class="o">.</span><span class="n">stopSimulation</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="tips-and-tricks">
+<h2>Tips and Tricks<a class="headerlink" href="#tips-and-tricks" title="Link to this heading">#</a></h2>
+<section id="automatic-simulation-start">
+<h3>Automatic simulation start<a class="headerlink" href="#automatic-simulation-start" title="Link to this heading">#</a></h3>
+<p>One can automatically boot up the Coppeliasim simulator on a given scene calling</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">$COPPELIASIM_ROOT_DIR</span>/coppeliaSim.sh<span class="w"> </span>/path/to/scene.ttt
+</pre></div>
+</div>
+<p>This operation can be performed also inside python, for instance when we want to start
+the simulator a launch file.
+We can check if the simulator is already running by checking the active processes on the
+system using the <code class="docutils literal notranslate"><span class="pre">psutil</span></code> library (that can be installed with <code class="docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">psutil</span></code>):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">psutil</span>
+
+<span class="n">is_running</span> <span class="o">=</span> <span class="s2">&quot;coppeliaSim&quot;</span> <span class="ow">in</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">psutil</span><span class="o">.</span><span class="n">process_iter</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">subprocess</span></code> python package one can also execute the command that boots the
+simulator with</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="n">coppeliasim_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;COPPELIASIM_ROOT_DIR&quot;</span><span class="p">]</span>
+<span class="n">scene</span> <span class="o">=</span> <span class="s2">&quot;/path/to/scene.ttt&quot;</span>
+<span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">coppeliasim_dir</span><span class="si">}</span><span class="s2">/coppeliaSim.sh&quot;</span><span class="p">,</span> <span class="n">scene</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Combining the 2 scripts one could do</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">psutil</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="k">if</span> <span class="s2">&quot;coppeliaSim&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">psutil</span><span class="o">.</span><span class="n">process_iter</span><span class="p">()):</span>
+    <span class="n">coppeliasim_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;COPPELIASIM_ROOT_DIR&quot;</span><span class="p">]</span>
+    <span class="n">scene</span> <span class="o">=</span> <span class="s2">&quot;/path/to/scene.ttt&quot;</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">coppeliasim_dir</span><span class="si">}</span><span class="s2">/coppeliaSim.sh&quot;</span><span class="p">,</span> <span class="n">scene</span><span class="p">],</span>
+                     <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">,</span>
+                     <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
 </section>
 
         </article>
@@ -347,9 +585,22 @@ colcon<span class="w"> </span>build<span class="w"> </span>--symlink-install
             <ul>
 <li><a class="reference internal" href="#">Coppelia Simulator</a><ul>
 <li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#ros2-integration">ROS2 integration</a><ul>
+<li><a class="reference internal" href="#ros2-setup">ROS2 Setup</a><ul>
 <li><a class="reference internal" href="#messages">Messages</a></li>
 <li><a class="reference internal" href="#workspace-build">Workspace build</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ros2-simulation-interface">ROS2 simulation interface</a><ul>
+<li><a class="reference internal" href="#robot-simulation">Robot simulation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#zeromq-remote-api">ZeroMQ remote API</a><ul>
+<li><a class="reference internal" href="#id2">Installation</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tips-and-tricks">Tips and Tricks</a><ul>
+<li><a class="reference internal" href="#automatic-simulation-start">Automatic simulation start</a></li>
 </ul>
 </li>
 </ul>
