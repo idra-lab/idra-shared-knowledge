@@ -13,6 +13,6 @@ in ROS2.
    `Davide Nardi <https://github.com/Hydran00>`_ and `Luca Beber <https://github.com/lucabeber>`_.
 
 .. include:: 01_installation.rst
-.. include:: 02_ros2_integration.rst
+.. include:: 02_ros2_integration/00_index.rst
 .. include:: 03_zeromq.rst
 .. include:: 10_tips.rst

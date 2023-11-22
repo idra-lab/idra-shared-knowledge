@@ -1,6 +1,3 @@
-ROS2 integration
-================
-
 Messages
 --------
 
