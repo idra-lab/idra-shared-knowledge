@@ -1,7 +1,6 @@
 ==========
 ROS2 Notes
 ==========
-
 These are personal notes for working with the second version of the `Robot Operating System <https://www.ros.org/>`_.
 Notes reported here are mainly valid for the `humble` version of ROS that's compatible with `Ubuntu 22.04 LTS`.
 For further information follow the `official documentation <https://docs.ros.org/en/humble/index.html>`_.
@@ -12,6 +11,7 @@ For further information follow the `official documentation <https://docs.ros.org
    01_CLI/00_index.rst
    02_Packages/00_index.rst
    10_Simulation/00_index.rst
+   30_gazebo/00_index.rst
 
 
 Installation
