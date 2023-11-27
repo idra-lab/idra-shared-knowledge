@@ -1,2 +1,5 @@
 html/
 nospace_*
+
+.vscode/
+_build/
