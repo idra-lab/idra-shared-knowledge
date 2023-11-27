@@ -134,29 +134,83 @@ CMake integration
 ^^^^^^^^^^^^^^^^^
 
 Once source code is developed, the CMake file must be updated in order to correctly build
-and install the targets:
+and install the targets. Bare example to add:
 
-Once source code is developed, the CMake file must be updated in order to correctly build
-and install the targets. Bare example to add
+.. code-block:: cmake
 
-.. code-block:: CMake
-
-   # Initialixe the executable my_node with the source code simple_node.cpp
+   # Declare your CMake version
+   cmake_minimum_required(VERSION 3.5)
+   # Declare project's name (the same of the one in the package.xml)
+   project(simple_node_pkg_name)
+   
+   # Exploit CMake's macros to find the required dependencies
+   # This is required by colcon
+   find_package(ament_cmake REQUIRED)
+   # This will tell CMake to find the rclcpp library in your OS
+   find_package(rclcpp REQUIRED)
+   # If you need to use some specific ROS2 msg (for example sensor_msgs)
+   find_package(sensor_msgs REQUIRED)
+   # If you need other libraries like eigen you have to find them too
+   find_package (Eigen3 3.3 REQUIRED NO_MODULE)
+   
+   # Initialise the executable my_node with the source code simple_node.cpp
    add_executable(my_node src/simple_node.cpp)
-   ament_target_dependencies(my_node rclcpp)        # add dependency to rclcpp
-
+   
+   # If you put some headers inside the 'include' folders, then you have to import them.
+   target_include_directories(my_node include)
+   
+   # Link the dependencies to your node
+   ament_target_dependencies(my_node rclcpp sensor_msgs Eigen3::Eigen)
+   
    install( # copy target to the lib folder inside the install space
       TARGETS my_node
       DESTINATION lib/${PROJECT_NAME}
    )
-
+   
    install( # copy launch files to the share folder inside the install space
       DIRECTORY launch
       DESTINATION share/${PROJECT_NAME}
    )
+   
+   ament_package()
 
 .. note::
 
    The name of the target is the one that should be used as executable name in the launch file.
    It is assumed that launch files are placed inside the *launch* folder and the
    *install* directive must be inserted to copy them to the install space.
+
+
+Mixed package creation (C++ and Python)
+---------------------------------------
+There is also the possibility to extend a C++ package in order to run also Python nodes.
+In order to do it you have to create a ``scripts`` folder inside your package.
+Then modify the CMake accordingly:
+
+.. code-block:: cmake
+
+   # Find the ROS2 Python package
+   find_package(rclpy REQUIRED)
+   
+   #...
+
+   # Install Python modules
+   ament_python_install_package(${PROJECT_NAME})
+   # Install Python executables
+   install(PROGRAMS
+   scripts/your_python_node_name.py
+   DESTINATION lib/${PROJECT_NAME}
+   )
+
+You also need to update the ``package.xml``:  
+
+.. code-block:: xml
+
+   <!-- ... -->
+   <depend>rclpy</depend>  
+   <!-- ... -->
+   <buildtool_depend>ament_cmake_python</buildtool_depend>
+
+
+
+   
