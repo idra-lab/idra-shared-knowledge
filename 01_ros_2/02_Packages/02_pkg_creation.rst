@@ -134,9 +134,6 @@ CMake integration
 ^^^^^^^^^^^^^^^^^
 
 Once source code is developed, the CMake file must be updated in order to correctly build
-and install the targets:
-
-Once source code is developed, the CMake file must be updated in order to correctly build
 and install the targets. Bare example to add:
 
 .. code-block:: cmake
@@ -214,6 +211,6 @@ You also need to update the ``package.xml``:
    <!-- ... -->
    <buildtool_depend>ament_cmake_python</buildtool_depend>
 
-TEST
+
 
    
