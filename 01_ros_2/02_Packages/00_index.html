@@ -372,10 +372,30 @@ been developed (and do not necessarily needs to be the same as the executable na
 <p>Once source code is developed, the CMake file must be updated in order to correctly build
 and install the targets:</p>
 <p>Once source code is developed, the CMake file must be updated in order to correctly build
-and install the targets. Bare example to add</p>
-<div class="highlight-CMake notranslate"><div class="highlight"><pre><span></span><span class="c"># Initialixe the executable my_node with the source code simple_node.cpp</span>
+and install the targets. Bare example to add:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="c"># Declare your CMake version</span>
+<span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.5</span><span class="p">)</span>
+<span class="c"># Declare project&#39;s name (the same of the one in the package.xml)</span>
+<span class="nb">project</span><span class="p">(</span><span class="s">simple_node_pkg_name</span><span class="p">)</span>
+
+<span class="c"># Exploit CMake&#39;s macros to find the required dependencies</span>
+<span class="c"># This is required by colcon</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">ament_cmake</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="c"># This will tell CMake to find the rclcpp library in your OS</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">rclcpp</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="c"># If you need to use some specific ROS2 msg (for example sensor_msgs)</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">sensor_msgs</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="c"># If you need other libraries like eigen you have to find them too</span>
+<span class="nb">find_package</span><span class="w"> </span><span class="p">(</span><span class="s">Eigen3</span><span class="w"> </span><span class="s">3.3</span><span class="w"> </span><span class="s">REQUIRED</span><span class="w"> </span><span class="s">NO_MODULE</span><span class="p">)</span>
+
+<span class="c"># Initialise the executable my_node with the source code simple_node.cpp</span>
 <span class="nb">add_executable</span><span class="p">(</span><span class="s">my_node</span><span class="w"> </span><span class="s">src/simple_node.cpp</span><span class="p">)</span>
-<span class="nb">ament_target_dependencies</span><span class="p">(</span><span class="s">my_node</span><span class="w"> </span><span class="s">rclcpp</span><span class="p">)</span><span class="w">        </span><span class="c"># add dependency to rclcpp</span>
+
+<span class="c"># If you put some headers inside the &#39;include&#39; folders, then you have to import them.</span>
+<span class="nb">target_include_directories</span><span class="p">(</span><span class="s">my_node</span><span class="w"> </span><span class="s">include</span><span class="p">)</span>
+
+<span class="c"># Link the dependencies to your node</span>
+<span class="nb">ament_target_dependencies</span><span class="p">(</span><span class="s">my_node</span><span class="w"> </span><span class="s">rclcpp</span><span class="w"> </span><span class="s">sensor_msgs</span><span class="w"> </span><span class="s">Eigen3::Eigen</span><span class="p">)</span>
 
 <span class="nb">install</span><span class="p">(</span><span class="w"> </span><span class="c"># copy target to the lib folder inside the install space</span>
 <span class="w">   </span><span class="s">TARGETS</span><span class="w"> </span><span class="s">my_node</span>
@@ -386,6 +406,8 @@ and install the targets. Bare example to add</p>
 <span class="w">   </span><span class="s">DIRECTORY</span><span class="w"> </span><span class="s">launch</span>
 <span class="w">   </span><span class="s">DESTINATION</span><span class="w"> </span><span class="s">share/</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span>
 <span class="p">)</span>
+
+<span class="nb">ament_package</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -395,6 +417,34 @@ It is assumed that launch files are placed inside the <em>launch</em> folder and
 <em>install</em> directive must be inserted to copy them to the install space.</p>
 </div>
 </section>
+</section>
+<section id="mixed-package-creation-c-and-python">
+<h3>Mixed package creation (C++ and Python)<a class="headerlink" href="#mixed-package-creation-c-and-python" title="Link to this heading">#</a></h3>
+<p>There is also the possibility to extend a C++ package in order to run also Python nodes.
+In order to do it you have to create a <code class="docutils literal notranslate"><span class="pre">scripts</span></code> folder inside your package.
+Then modify the CMake accordingly:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="c"># Find the ROS2 Python package</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">rclpy</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+
+<span class="c">#...</span>
+
+<span class="c"># Install Python modules</span>
+<span class="nb">ament_python_install_package</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="p">)</span>
+<span class="c"># Install Python executables</span>
+<span class="nb">install</span><span class="p">(</span><span class="s">PROGRAMS</span>
+<span class="s">scripts/your_python_node_name.py</span>
+<span class="s">DESTINATION</span><span class="w"> </span><span class="s">lib/</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>You also need to update the <code class="docutils literal notranslate"><span class="pre">package.xml</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cm">&lt;!-- ... --&gt;</span>
+<span class="nt">&lt;depend&gt;</span>rclpy<span class="nt">&lt;/depend&gt;</span>
+<span class="cm">&lt;!-- ... --&gt;</span>
+<span class="nt">&lt;buildtool_depend&gt;</span>ament_cmake_python<span class="nt">&lt;/buildtool_depend&gt;</span>
+</pre></div>
+</div>
+<p>TEST</p>
 </section>
 </section>
 <section id="launch-files">
@@ -489,6 +539,7 @@ can be started.</p>
 <li><a class="reference internal" href="#cmake-integration">CMake integration</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#mixed-package-creation-c-and-python">Mixed package creation (C++ and Python)</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#launch-files">Launch files</a></li>
