@@ -10,3 +10,4 @@ Linux and other Utilities
    10_coppelia/00_index.rst
    02_tarballs
    04_ssh/00_index.rst
+   05_cuda/00_index.rst

@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>Workflow triggers - IDRA laboratory - Open Knowledge documentation</title>
+        <title>Install the Nvidia Cuda Toolkit - IDRA laboratory - Open Knowledge documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
@@ -166,12 +166,12 @@
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../00_index.html">Linux and other Utilities</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Linux and other Utilities</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../02_docker/00_index.html">Docker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="00_index.html">Github Actions for CI/CD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_github_actions/00_index.html">Github Actions for CI/CD</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_coppelia/00_index.html">Coppelia Simulator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../04_ssh/00_index.html">Fast ssh configuration for GitHub in Linux</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../05_cuda/00_index.html">Nvidia Driver + Cuda Toolkit Installation guide</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../05_cuda/00_index.html#install-nvidia-drivers-in-ubuntu">Install Nvidia Drivers in Ubuntu</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../05_cuda/00_index.html#install-the-nvidia-cuda-toolkit">Install the Nvidia Cuda Toolkit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00_index.html">Nvidia Driver + Cuda Toolkit Installation guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00_index.html#install-nvidia-drivers-in-ubuntu">Install Nvidia Drivers in Ubuntu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00_index.html#install-the-nvidia-cuda-toolkit">Install the Nvidia Cuda Toolkit</a></li>
 </ul>
 </li>
 </ul>
@@ -208,33 +208,10 @@
           </label>
         </div>
         <article role="main">
-          <section id="workflow-triggers">
-<h1>Workflow triggers<a class="headerlink" href="#workflow-triggers" title="Link to this heading">#</a></h1>
-<p>A GitHub action workflow might be triggered by different conditions, for instance the
-push on a specific branch, the creation of a pull request or a tag, a scheduled event and
-even manual triggers.</p>
-<p>For instance the following allows to trigger the workflow when commits are pushed either
-on the <cite>main</cite> or <cite>develop</cite> branches:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">on</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">branches</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">develop</span>
-</pre></div>
-</div>
-<p>Conditions can be combined together; in the following example the workflow can be
-triggered manually or by a scheduled event:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">on</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">workflow_dispatch</span><span class="p">:</span><span class="w">         </span><span class="c1"># manual trigger</span>
-<span class="w">  </span><span class="nt">schedule</span><span class="p">:</span><span class="w">                  </span><span class="c1"># scheduled event</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">cron</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0</span><span class="nv"> </span><span class="s">0</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*&#39;</span><span class="w">      </span><span class="c1"># scheduling details</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Based on the <a class="reference external" href="https://cloud.google.com/scheduler/docs/configuring/cron-job-schedules?hl=it">cron documentation</a>,
-this task is executed each day ad midnight. Check the link for more details.</p>
-</div>
+          <section id="install-the-nvidia-cuda-toolkit">
+<h1>Install the Nvidia Cuda Toolkit<a class="headerlink" href="#install-the-nvidia-cuda-toolkit" title="Link to this heading">#</a></h1>
+<p>For this purpose you have to install the Cuda Toolkit. You can download it from here: <a class="reference external" href="https://developer.nvidia.com/cuda-downloads">https://developer.nvidia.com/cuda-downloads</a>.
+<em>Select Linux -&gt; x86_64 -&gt; Ubuntu -&gt; 22.04 -&gt; deb (local)</em>, then copy-paste every command one at the time.</p>
 </section>
 
         </article>
