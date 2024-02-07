@@ -16,6 +16,7 @@ These are the main topics that are covered in this repository:
 
    01_ros_2/00_index.rst
    02_linux/00_index.rst
+   03_demos/00_index.rst
 
 .. include:: CONTRIBUTING.md
    :parser: myst_parser.sphinx_
