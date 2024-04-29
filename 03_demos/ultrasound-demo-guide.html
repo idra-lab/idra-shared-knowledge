@@ -5,11 +5,11 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="prev" title="Demos" href="00_index.html" />
 
-    <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
+    <!-- Generated with Sphinx 7.3.7 and Furo 2024.04.27 -->
         <title>Teleoperated Ultrasonography Setup and Demo Guide - IDRA laboratory - Open Knowledge documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
-    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -114,6 +114,8 @@
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
 
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
 
 
 <div class="page">
@@ -211,12 +213,12 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="teleoperated-ultrasonography-setup-and-demo-guide">
-<h1>Teleoperated Ultrasonography Setup and Demo Guide<a class="headerlink" href="#teleoperated-ultrasonography-setup-and-demo-guide" title="Link to this heading">#</a></h1>
+<h1>Teleoperated Ultrasonography Setup and Demo Guide<a class="headerlink" href="#teleoperated-ultrasonography-setup-and-demo-guide" title="Link to this heading">¶</a></h1>
 <p>This is the IDRA guide to replicate the Teleoperated Ultrasonography.</p>
 <section id="required-hardware">
-<h2>Required Hardware<a class="headerlink" href="#required-hardware" title="Link to this heading">#</a></h2>
+<h2>Required Hardware<a class="headerlink" href="#required-hardware" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Robotic arm (currently supported: UR3e);</p></li>
 <li><p>Haptic Device (current supported: Haption Desktop 6D);</p></li>
@@ -226,7 +228,7 @@
 <li><p>Ethernet router with at least 4 ports;</p></li>
 </ul>
 <section id="optional">
-<h3>Optional<a class="headerlink" href="#optional" title="Link to this heading">#</a></h3>
+<h3>Optional<a class="headerlink" href="#optional" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Android phone for ultrasound feedback;</p></li>
 <li><p>VR Headset (current supported: Meta Quest);</p></li>
@@ -236,7 +238,7 @@
 </section>
 </section>
 <section id="connections">
-<h2>Connections<a class="headerlink" href="#connections" title="Link to this heading">#</a></h2>
+<h2>Connections<a class="headerlink" href="#connections" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>The Haption haptic device (192.168.100.53) is connected through Ethernet with the Ubuntu computer (192.168.100.50).</p></li>
 <li><p>The other devices (robotic arm, F\T sensor, Ubuntu computer, Windows computer if VR) are connected with the Ethernet router;</p></li>
@@ -245,7 +247,7 @@
 </ul>
 </section>
 <section id="required-software-and-dependencies">
-<h2>Required Software and Dependencies<a class="headerlink" href="#required-software-and-dependencies" title="Link to this heading">#</a></h2>
+<h2>Required Software and Dependencies<a class="headerlink" href="#required-software-and-dependencies" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver">ROS 2 UR Driver</a></p></li>
 <li><p><a class="reference external" href="https://github.com/fzi-forschungszentrum-informatik/cartesian_controllers/tree/ros2">ROS 2 Cartesian impedance controller</a>;</p></li>
@@ -254,10 +256,10 @@
 </ul>
 </section>
 <section id="instructions">
-<h2>Instructions<a class="headerlink" href="#instructions" title="Link to this heading">#</a></h2>
+<h2>Instructions<a class="headerlink" href="#instructions" title="Link to this heading">¶</a></h2>
 <!-- Davide's part to be checked and reorganized -->
 <section id="desktop-pc-robot-connection">
-<h3>Desktop pc - Robot connection<a class="headerlink" href="#desktop-pc-robot-connection" title="Link to this heading">#</a></h3>
+<h3>Desktop pc - Robot connection<a class="headerlink" href="#desktop-pc-robot-connection" title="Link to this heading">¶</a></h3>
 <ol class="arabic">
 <li><p>Connect the UR3e and the Bota F/T sensor to the router via ethernet (bota’s cable must be alimented)</p></li>
 <li><p>Connect the pc to the router via ethernet</p></li>
@@ -289,7 +291,7 @@ Launch bota sensor</p>
 </ol>
 </section>
 <section id="desktop-pc-haptic-inteface">
-<h3>Desktop pc - Haptic inteface<a class="headerlink" href="#desktop-pc-haptic-inteface" title="Link to this heading">#</a></h3>
+<h3>Desktop pc - Haptic inteface<a class="headerlink" href="#desktop-pc-haptic-inteface" title="Link to this heading">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Connect the haptic interface directly on the ethernet port of the desktop pc.</p></li>
 <li><p>Set the desktop’s ip of that connection to 192.168.100.53 (you can ping also this time to test connection)</p></li>
@@ -321,7 +323,7 @@ If the operation succeded you can kill both nodes.</p>
 1. Connect the realsense through the usb-c cable to the pc -->
 </section>
 <section id="android-phone">
-<h3>Android phone<a class="headerlink" href="#android-phone" title="Link to this heading">#</a></h3>
+<h3>Android phone<a class="headerlink" href="#android-phone" title="Link to this heading">¶</a></h3>
 <ol class="arabic simple">
 <li><p>I don’t remember the name of the app (I changed phone) but if you search the probe name
 you should find it easily, it was something like “wireless ecg” maybe. Download it.</p></li>
@@ -338,7 +340,7 @@ of pressing many times the kernel type on the settings (you can look online))</p
 </ol>
 </section>
 <section id="desktop-pc-launch-the-demo">
-<h3>Desktop pc: Launch the demo<a class="headerlink" href="#desktop-pc-launch-the-demo" title="Link to this heading">#</a></h3>
+<h3>Desktop pc: Launch the demo<a class="headerlink" href="#desktop-pc-launch-the-demo" title="Link to this heading">¶</a></h3>
 <ol class="arabic">
 <li><p>In a terminal where the <code class="docutils literal notranslate"><span class="pre">ur_ws</span></code> and <code class="docutils literal notranslate"><span class="pre">bota_ws</span></code> workspaces are sourced run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">~/</span><span class="n">ur3_ws</span><span class="o">/</span><span class="n">nardi_ws</span><span class="o">/</span><span class="n">install</span><span class="o">/</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
@@ -360,14 +362,14 @@ of pressing many times the kernel type on the settings (you can look online))</p
 </ol>
 </section>
 <section id="desktop-pc-stream-the-topics-to-unity">
-<h3>Desktop pc: stream the topics to Unity<a class="headerlink" href="#desktop-pc-stream-the-topics-to-unity" title="Link to this heading">#</a></h3>
+<h3>Desktop pc: stream the topics to Unity<a class="headerlink" href="#desktop-pc-stream-the-topics-to-unity" title="Link to this heading">¶</a></h3>
 <ol class="arabic simple">
 <li><p>I create an apposite script which should be located in the <code class="docutils literal notranslate"><span class="pre">haption_ws</span></code> workspace.
 It had a name like “tcp_endpoint.sh”. You have to run it in one terminal.</p></li>
 </ol>
 </section>
 <section id="laptop-pc">
-<h3>Laptop pc:<a class="headerlink" href="#laptop-pc" title="Link to this heading">#</a></h3>
+<h3>Laptop pc:<a class="headerlink" href="#laptop-pc" title="Link to this heading">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Connect the pc via ethernet to the router. You should modify your ip to be under the same net
 of the desktop pc. There should be a txt file called “ip_tables.txt” on the Desktop that tells you the correct one. You can try pinging desktop pc and viceversa to check if the ip is a correct one.</p></li>
@@ -384,7 +386,7 @@ It will run Unity with the hospital scene.</p></li>
 </ol>
 </section>
 <section id="vr-headset">
-<h3>VR Headset:<a class="headerlink" href="#vr-headset" title="Link to this heading">#</a></h3>
+<h3>VR Headset:<a class="headerlink" href="#vr-headset" title="Link to this heading">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Boot it up keeping pressed lateral button.</p></li>
 <li><p>Connect it to the pc through usb-c cable (my white long cable should be there), you should see a request in the vr for allowing data exchange</p></li>
@@ -392,14 +394,14 @@ It will run Unity with the hospital scene.</p></li>
 </ol>
 </section>
 <section id="laptop-pc-test-application">
-<h3>Laptop pc: Test application<a class="headerlink" href="#laptop-pc-test-application" title="Link to this heading">#</a></h3>
+<h3>Laptop pc: Test application<a class="headerlink" href="#laptop-pc-test-application" title="Link to this heading">¶</a></h3>
 <ol class="arabic simple">
 <li><p>When the scene is ready press play having the vr connected and the Oculus app runnig. This should stream the environment in the app and this should enable the view of the pointcloud if the desktop demo is running.</p></li>
 </ol>
 </section>
 </section>
 <section id="finally-launch-evrything">
-<h2>FINALLY LAUNCH EVRYTHING:<a class="headerlink" href="#finally-launch-evrything" title="Link to this heading">#</a></h2>
+<h2>FINALLY LAUNCH EVRYTHING:<a class="headerlink" href="#finally-launch-evrything" title="Link to this heading">¶</a></h2>
 <p>When everything works and evrything is properly connected do this:
 1. Launch the desktop demo
 2. Launch Unity App
@@ -491,9 +493,9 @@ It will run Unity with the hospital scene.</p></li>
     </aside>
   </div>
 </div><script src="../_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     </body>

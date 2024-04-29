@@ -5,11 +5,11 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
-    <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
+    <!-- Generated with Sphinx 7.3.7 and Furo 2024.04.27 -->
         <title>Package creation - IDRA laboratory - Open Knowledge documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
-    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -114,6 +114,8 @@
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
 
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
 
 
 <div class="page">
@@ -211,12 +213,12 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="package-creation">
-<h1>Package creation<a class="headerlink" href="#package-creation" title="Link to this heading">#</a></h1>
+<h1>Package creation<a class="headerlink" href="#package-creation" title="Link to this heading">¶</a></h1>
 <p>Packages can be created with different programming languages, mainly <cite>python</cite> and <cite>C++</cite>.</p>
 <section id="python-package-creation">
-<h2>Python package creation<a class="headerlink" href="#python-package-creation" title="Link to this heading">#</a></h2>
+<h2>Python package creation<a class="headerlink" href="#python-package-creation" title="Link to this heading">¶</a></h2>
 <p>Once inside the <cite>src</cite> folder inside a workspace, a new python package (e.g. <code class="docutils literal notranslate"><span class="pre">my_package</span></code>) can be created with
 the command</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>pkg<span class="w"> </span>create<span class="w"> </span>--build-type<span class="w"> </span>ament_python<span class="w"> </span>my_package<span class="w"> </span>--dependencies<span class="w"> </span>rclpy
@@ -241,7 +243,7 @@ This create the following file tree:</p>
 <p>Executable scrips must be placed inside the folder with the same name of the initialized
 package (in this case <cite>my_package</cite>) where an empty <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> is already present.</p>
 <section id="launch-files-integration">
-<h3>Launch files integration<a class="headerlink" href="#launch-files-integration" title="Link to this heading">#</a></h3>
+<h3>Launch files integration<a class="headerlink" href="#launch-files-integration" title="Link to this heading">¶</a></h3>
 <p>Since <a class="reference internal" href="03_launch_files.html#launch-files"><span class="std std-ref">launch files</span></a> will more than likely to be required for a new package,
 it can be useful to create a <cite>launch</cite> folder in which to store such entries; once in the
 root directory of the packages</p>
@@ -269,7 +271,7 @@ while the second element is a list of files to be copied (relative to the packag
 In this particular case we <em>glob</em> all launch files that are included in the <em>launch</em> folder.</p>
 </section>
 <section id="adding-executables">
-<h3>Adding executables<a class="headerlink" href="#adding-executables" title="Link to this heading">#</a></h3>
+<h3>Adding executables<a class="headerlink" href="#adding-executables" title="Link to this heading">¶</a></h3>
 <p>As previously mentioned, <em>.py</em> executables must be inserted inside the folder
 with the same name of the package.</p>
 <p>As good practise, its recommended to include the <em>main</em> inclusion guard for the python
@@ -306,7 +308,7 @@ been developed (and do not necessarily needs to be the same as the executable na
 </section>
 </section>
 <section id="c-package-creation">
-<h2>C++ package creation<a class="headerlink" href="#c-package-creation" title="Link to this heading">#</a></h2>
+<h2>C++ package creation<a class="headerlink" href="#c-package-creation" title="Link to this heading">¶</a></h2>
 <p><em>C++</em> packages can be create similarly to python ones just by changing the build type</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>pkg<span class="w"> </span>create<span class="w"> </span>--build-type<span class="w"> </span>ament_cmake<span class="w"> </span>&lt;package_name&gt;<span class="w"> </span>--dependencies<span class="w"> </span>&lt;dependencies&gt;
 </pre></div>
@@ -323,7 +325,7 @@ been developed (and do not necessarily needs to be the same as the executable na
 <p>Applications (<em>.cpp</em> files) should be developed inside the <em>src</em> folder, while the
 <em>include</em> folder should contain the header files.</p>
 <section id="cmake-integration">
-<h3>CMake integration<a class="headerlink" href="#cmake-integration" title="Link to this heading">#</a></h3>
+<h3>CMake integration<a class="headerlink" href="#cmake-integration" title="Link to this heading">¶</a></h3>
 <p>Once source code is developed, the CMake file must be updated in order to correctly build
 and install the targets. Bare example to add:</p>
 <div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="c"># Declare your CMake version</span>
@@ -372,7 +374,7 @@ It is assumed that launch files are placed inside the <em>launch</em> folder and
 </section>
 </section>
 <section id="mixed-package-creation-c-and-python">
-<h2>Mixed package creation (C++ and Python)<a class="headerlink" href="#mixed-package-creation-c-and-python" title="Link to this heading">#</a></h2>
+<h2>Mixed package creation (C++ and Python)<a class="headerlink" href="#mixed-package-creation-c-and-python" title="Link to this heading">¶</a></h2>
 <p>There is also the possibility to extend a C++ package in order to run also Python nodes.
 In order to do it you have to create a <code class="docutils literal notranslate"><span class="pre">scripts</span></code> folder inside your package.
 Then modify the CMake accordingly:</p>
@@ -460,9 +462,9 @@ Then modify the CMake accordingly:</p>
     </aside>
   </div>
 </div><script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     </body>

@@ -5,11 +5,11 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Github Actions for CI/CD" href="../03_github_actions/00_index.html" /><link rel="prev" title="Linux and other Utilities" href="../00_index.html" />
 
-    <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
+    <!-- Generated with Sphinx 7.3.7 and Furo 2024.04.27 -->
         <title>Docker - IDRA laboratory - Open Knowledge documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
-    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -114,6 +114,8 @@
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
 
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
 
 
 <div class="page">
@@ -211,11 +213,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="docker">
-<h1>Docker<a class="headerlink" href="#docker" title="Link to this heading">#</a></h1>
+<h1>Docker<a class="headerlink" href="#docker" title="Link to this heading">¶</a></h1>
 <section id="installation">
-<span id="docker-installation"></span><h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<span id="docker-installation"></span><h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
 <p>For more details follow the <a class="reference external" href="https://docs.docker.com/engine/install/ubuntu/">official installation guide</a>
 to install in Ubuntu. In essence</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Add Docker&#39;s official GPG key:
@@ -245,6 +247,38 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 </div>
 <p>More details <a class="reference external" href="https://stacktuts.com/got-permission-denied-while-trying-to-connect-to-the-docker-daemon-socket-at-unix-var-run-docker-sock-get-http-2fvar-2frun-2fdocker-sock-v1-24-version-dial-unix-var-run-docker-sock-connect-permission-denied">here</a>.</p>
 </div>
+<section id="arch-install">
+<h3>Arch install<a class="headerlink" href="#arch-install" title="Link to this heading">¶</a></h3>
+<p>Link to the <a class="reference external" href="https://wiki.archlinux.org/title/Docker">Arch Wiki</a>.
+To install the docker engine:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>pacman<span class="w"> </span>-Sy<span class="w"> </span>docker
+</pre></div>
+</div>
+<p>Then either the <code class="docutils literal notranslate"><span class="pre">docker.service</span></code> or the <code class="docutils literal notranslate"><span class="pre">docker.socket</span></code> system service must be enabled.
+The former loads docker at boot up (thus more load time could be required), while the latter loads on first usage:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>docker.socket
+<span class="c1"># Or alternatively</span>
+<span class="c1"># sudo systemctl enable docker.socket</span>
+</pre></div>
+</div>
+<p>As discussed in the Arch wiki page and <a class="reference external" href="https://www.configserverfirewall.com/ubuntu-linux/add-user-to-docker-group-ubuntu/">here</a>, to run docker with sudo privileges it is recommended to add the own <cite>user</cite> to the <code class="docutils literal notranslate"><span class="pre">docker</span></code> group.
+You can check the existance of the group by calling</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>grep<span class="w"> </span>docker<span class="w"> </span>/etc/group
+</pre></div>
+</div>
+<p>If the group exists, then add the user simply with the command</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>docker<span class="w"> </span><span class="nv">$USER</span><span class="w">  </span><span class="c1"># or set the &lt;user_name&gt;</span>
+</pre></div>
+</div>
+<p>or alternatively create the group:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>groupadd<span class="w"> </span>docker
+</pre></div>
+</div>
+<p>After this operation, remember to restart the docker service:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>docker
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
@@ -304,7 +338,10 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Docker</a><ul>
-<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#arch-install">Arch install</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -317,9 +354,9 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
     </aside>
   </div>
 </div><script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     </body>
