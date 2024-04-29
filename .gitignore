@@ -3,3 +3,5 @@ nospace_*
 
 .vscode/
 _build/
+.env/
+.venv/
