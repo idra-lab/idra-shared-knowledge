@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Github Actions for CI/CD" href="../03_github_actions/00_index.html" /><link rel="prev" title="Linux and other Utilities" href="../00_index.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <!-- Generated with Sphinx 7.3.7 and Furo 2024.04.27 -->
-        <title>Docker - IDRA laboratory - Open Knowledge documentation</title>
+        <title>Dockerfiles - IDRA laboratory - Open Knowledge documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
@@ -138,7 +138,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -158,7 +158,7 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul class="current">
+  <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../01_ros_2/00_index.html">ROS2 Notes</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ROS2 Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../01_ros_2/01_CLI/00_index.html">CLI Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../01_ros_2/02_Packages/00_index.html">Workspaces and Packages</a></li>
@@ -166,8 +166,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../01_ros_2/30_gazebo/00_index.html">Gazebo Simulator</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../00_index.html">Linux and other Utilities</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Linux and other Utilities</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Docker</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../00_index.html">Linux and other Utilities</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Linux and other Utilities</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="00_index.html">Docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../03_github_actions/00_index.html">Github Actions for CI/CD</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_coppelia/00_index.html">Coppelia Simulator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../04_ssh/00_index.html">Fast ssh configuration for GitHub in Linux</a></li>
@@ -208,119 +208,14 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="docker">
-<h1>Docker<a class="headerlink" href="#docker" title="Link to this heading">¶</a></h1>
-<section id="installation">
-<span id="docker-installation"></span><h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
-<p>For more details follow the <a class="reference external" href="https://docs.docker.com/engine/install/ubuntu/">official installation guide</a>
-to install in Ubuntu. In essence</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Add Docker&#39;s official GPG key:
-sudo apt-get update
-sudo apt-get install ca-certificates curl gnupg
-sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-sudo chmod a+r /etc/apt/keyrings/docker.gpg
-
-# Add the repository to Apt sources:
-echo \
-  &quot;deb [arch=&quot;$(dpkg --print-architecture)&quot; signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  &quot;$(. /etc/os-release &amp;&amp; echo &quot;$VERSION_CODENAME&quot;)&quot; stable&quot; | \
-  sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
-sudo apt-get update
-
-# Install docker packages:
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you plan to use docker as github runner for CI/CD, provide privileges to the
-<em>docker.sock</em> files:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">chmod</span> <span class="mi">666</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span>
-</pre></div>
-</div>
-<p>More details <a class="reference external" href="https://stacktuts.com/got-permission-denied-while-trying-to-connect-to-the-docker-daemon-socket-at-unix-var-run-docker-sock-get-http-2fvar-2frun-2fdocker-sock-v1-24-version-dial-unix-var-run-docker-sock-connect-permission-denied">here</a>.</p>
-</div>
-<section id="arch-install">
-<h3>Arch install<a class="headerlink" href="#arch-install" title="Link to this heading">¶</a></h3>
-<p>Link to the <a class="reference external" href="https://wiki.archlinux.org/title/Docker">Arch Wiki</a>.
-To install the docker engine:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>pacman<span class="w"> </span>-Sy<span class="w"> </span>docker
-</pre></div>
-</div>
-<p>Then either the <code class="docutils literal notranslate"><span class="pre">docker.service</span></code> or the <code class="docutils literal notranslate"><span class="pre">docker.socket</span></code> system service must be enabled.
-The former loads docker at boot up (thus more load time could be required), while the latter loads on first usage:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>docker.socket
-<span class="c1"># Or alternatively</span>
-<span class="c1"># sudo systemctl enable docker.socket</span>
-</pre></div>
-</div>
-<p>As discussed in the Arch wiki page and <a class="reference external" href="https://www.configserverfirewall.com/ubuntu-linux/add-user-to-docker-group-ubuntu/">here</a>, to run docker with sudo privileges it is recommended to add the own <cite>user</cite> to the <code class="docutils literal notranslate"><span class="pre">docker</span></code> group.
-You can check the existance of the group by calling</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>grep<span class="w"> </span>docker<span class="w"> </span>/etc/group
-</pre></div>
-</div>
-<p>If the group exists, then add the user simply with the command</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>docker<span class="w"> </span><span class="nv">$USER</span><span class="w">  </span><span class="c1"># or set the &lt;user_name&gt;</span>
-</pre></div>
-</div>
-<p>or alternatively create the group:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>groupadd<span class="w"> </span>docker
-</pre></div>
-</div>
-<p>After this operation, remember to restart the docker service:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>docker
-</pre></div>
-</div>
-</section>
-</section>
-<section id="useful-commands">
-<h2>Useful commands<a class="headerlink" href="#useful-commands" title="Link to this heading">¶</a></h2>
-<p>To pull a image from the <a class="reference external" href="https://hub.docker.com/">DockerHub</a>, call</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>&lt;image_name&gt;:&lt;tag&gt;
-</pre></div>
-</div>
-<p>For instance to pull the <a class="reference external" href="https://hub.docker.com/r/osrf/ros">ROS2 humble image</a> call <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">pull</span> <span class="pre">osrf/ros:humble-desktop-full</span></code>
-(this image comes also with GUI applications, such RViz).</p>
-<p>To see the already pulled images that are ready to run call</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>image<span class="w"> </span>ls
-</pre></div>
-</div>
-<p>To create a container, call</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># docker image run &lt;image&gt;</span>
-<span class="c1"># or, shorter,</span>
-docker<span class="w"> </span>run<span class="w"> </span>&lt;image&gt;
-</pre></div>
-</div>
-<p>In general, configuration arguments that must be passed to the image on boot up must be called <em>prior</em> to the image name,
-while arguments that <em>follows</em> are executed on the spinned contained:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>&lt;docker_arguments&gt;<span class="w"> </span>&lt;image&gt;<span class="w"> </span>&lt;commands&gt;
-</pre></div>
-</div>
-<p>A useful argument is <code class="docutils literal notranslate"><span class="pre">-ti</span></code> that boots the image and starts an <code class="docutils literal notranslate"><span class="pre">i</span></code> interactive <code class="docutils literal notranslate"><span class="pre">t</span></code> terminal.</p>
-<p>To see currently runnint containers, call</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>container<span class="w"> </span>ls
-<span class="c1"># or,</span>
-<span class="c1"># docker ps</span>
-</pre></div>
-</div>
-<p>To see already spinned containers that have been terminated, append the <code class="docutils literal notranslate"><span class="pre">-a</span></code> flag to the command.
-Containers can be deleted with <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">container</span> <span class="pre">rm</span> <span class="pre">&lt;container_name&gt;</span> <span class="pre">-f</span></code>, with <code class="docutils literal notranslate"><span class="pre">-f</span></code> the <em>force</em> argument.
-Additionally, you can pass the <code class="docutils literal notranslate"><span class="pre">--rm</span></code> flag to the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> call to automatically delete the container when it stops spinning.</p>
-<p>You can also start an already start a closed container or close a running container with the following commands:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>start<span class="w"> </span>&lt;container_name&gt;
-docker<span class="w"> </span>stop<span class="w"> </span>&lt;container_name&gt;
-</pre></div>
-</div>
-</section>
-<section id="dockerfiles">
-<h2>Dockerfiles<a class="headerlink" href="#dockerfiles" title="Link to this heading">¶</a></h2>
+          <section id="dockerfiles">
+<h1>Dockerfiles<a class="headerlink" href="#dockerfiles" title="Link to this heading">¶</a></h1>
 <p>To create a custom Docker image, it is simply necessary to write a <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code>.
 Once the file is written, the image can be build with the command</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>&lt;image_name&gt;<span class="w"> </span>&lt;path_to_Dockerfile&gt;&lt;:tag<span class="w"> </span><span class="o">(</span>optional<span class="o">)</span>&gt;
@@ -366,33 +261,14 @@ For further details, <a class="reference external" href="https://phoenixnap.com/
 </pre></div>
 </div>
 </section>
-</section>
 
         </article>
       </div>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../03_github_actions/00_index.html">
-              <div class="page-info">
-                <div class="context">
-                  <span>Next</span>
-                </div>
-                <div class="title">Github Actions for CI/CD</div>
-              </div>
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-            </a>
-          <a class="prev-page" href="../00_index.html">
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-              <div class="page-info">
-                <div class="context">
-                  <span>Previous</span>
-                </div>
-                
-                <div class="title">Linux and other Utilities</div>
-                
-              </div>
-            </a>
+          
+          
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -411,32 +287,8 @@ For further details, <a class="reference external" href="https://phoenixnap.com/
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">Docker</a><ul>
-<li><a class="reference internal" href="#installation">Installation</a><ul>
-<li><a class="reference internal" href="#arch-install">Arch install</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#useful-commands">Useful commands</a></li>
-<li><a class="reference internal" href="#dockerfiles">Dockerfiles</a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>
