@@ -1,5 +1,5 @@
 Dockerfiles
------------
+===========
 
 To create a custom Docker image, it is simply necessary to write a ``Dockerfile``. 
 Once the file is written, the image can be build with the command
