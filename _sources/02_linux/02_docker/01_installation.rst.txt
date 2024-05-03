@@ -1,7 +1,7 @@
 .. _docker-installation:
 
 Installation
-------------
+============
 
 For more details follow the `official installation guide <https://docs.docker.com/engine/install/ubuntu/>`_
 to install in Ubuntu. In essence

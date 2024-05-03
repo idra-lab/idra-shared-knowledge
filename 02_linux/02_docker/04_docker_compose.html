@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <!-- Generated with Sphinx 7.3.7 and Furo 2024.04.27 -->
-        <title>Useful commands - IDRA laboratory - Open Knowledge documentation</title>
+        <title>Docker Compose - IDRA laboratory - Open Knowledge documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
@@ -138,7 +138,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -208,75 +208,63 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="useful-commands">
-<h1>Useful commands<a class="headerlink" href="#useful-commands" title="Link to this heading">¶</a></h1>
-<p>To pull a image from the <a class="reference external" href="https://hub.docker.com/">DockerHub</a>, call</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>&lt;image_name&gt;:&lt;tag&gt;
-</pre></div>
-</div>
-<p>For instance to pull the <a class="reference external" href="https://hub.docker.com/r/osrf/ros">ROS2 humble image</a> call <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">pull</span> <span class="pre">osrf/ros:humble-desktop-full</span></code>
-(this image comes also with GUI applications, such RViz).</p>
-<p>To see the already pulled images that are ready to run call</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>image<span class="w"> </span>ls
-</pre></div>
-</div>
-<p>To create a container, call</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># docker image run &lt;image&gt;</span>
-<span class="c1"># or, shorter,</span>
-docker<span class="w"> </span>run<span class="w"> </span>&lt;image&gt;
-</pre></div>
-</div>
-<p>In general, configuration arguments that must be passed to the image on boot up must be called <em>prior</em> to the image name,
-while arguments that <em>follows</em> are executed on the spinned contained:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>&lt;docker_arguments&gt;<span class="w"> </span>&lt;image&gt;<span class="w"> </span>&lt;commands&gt;
-</pre></div>
-</div>
-<p>A useful argument is <code class="docutils literal notranslate"><span class="pre">-ti</span></code> that boots the image and starts an <code class="docutils literal notranslate"><span class="pre">i</span></code> interactive <code class="docutils literal notranslate"><span class="pre">t</span></code> terminal.</p>
-<p>To see currently runnint containers, call</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>container<span class="w"> </span>ls
-<span class="c1"># or,</span>
-<span class="c1"># docker ps</span>
-</pre></div>
-</div>
-<p>To see already spinned containers that have been terminated, append the <code class="docutils literal notranslate"><span class="pre">-a</span></code> flag to the command.
-Containers can be deleted with <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">container</span> <span class="pre">rm</span> <span class="pre">&lt;container_name&gt;</span> <span class="pre">-f</span></code>, with <code class="docutils literal notranslate"><span class="pre">-f</span></code> the <em>force</em> argument.
-Additionally, you can pass the <code class="docutils literal notranslate"><span class="pre">--rm</span></code> flag to the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> call to automatically delete the container when it stops spinning.</p>
-<p>You can also start an already start a closed container or close a running container with the following commands:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>start<span class="w"> </span>&lt;container_name&gt;
-docker<span class="w"> </span>stop<span class="w"> </span>&lt;container_name&gt;
-</pre></div>
-</div>
-<section id="run-arguments">
-<h2>Run arguments<a class="headerlink" href="#run-arguments" title="Link to this heading">¶</a></h2>
-<p>The following is a list of useful launch arguments that can be paired with the <code class="docutils literal notranslate"><span class="pre">run</span></code> command to extend docker capabilities.</p>
+          <section id="docker-compose">
+<h1>Docker Compose<a class="headerlink" href="#docker-compose" title="Link to this heading">¶</a></h1>
+<p>As the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> comman starts having lots of different argument that must be provided to it, it becomes hard to remember the exact command to start a container.
+To overcome this limitation there are different methods, namely:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-it</span></code>: as already mentioned, starts the docker container and enters in the interactive terminal;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--rm</span></code>: removes the container instance after the container stops spinning;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--env</span> <span class="pre">&lt;VAR&gt;:&lt;VAL&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">-e</span> <span class="pre">&lt;VAR&gt;:&lt;VAL&gt;</span></code>: sets an environment variable <code class="docutils literal notranslate"><span class="pre">VAR</span></code> with <code class="docutils literal notranslate"><span class="pre">VALUE</span></code> on the container;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--net=&lt;CONFIG&gt;</span></code>: sets the networking configuration. Details can be found <a class="reference external" href="https://docs.docker.com/network/">here</a>,
-but available configurations are <code class="docutils literal notranslate"><span class="pre">bridge</span></code> (default), <code class="docutils literal notranslate"><span class="pre">host</span></code> (recommended), <code class="docutils literal notranslate"><span class="pre">none</span></code>, <code class="docutils literal notranslate"><span class="pre">overlay</span></code>, <code class="docutils literal notranslate"><span class="pre">ipvlan</span></code>, <code class="docutils literal notranslate"><span class="pre">macvlan</span></code>.</p></li>
+<li><p>write the command into a shell <code class="docutils literal notranslate"><span class="pre">.sh</span></code> script, make it executable (<code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">+x</span></code>) and run it from the terminal;</p></li>
+<li><p>for containers that are often used by the user, create an alias in the shell configuration file (<code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>, <code class="docutils literal notranslate"><span class="pre">.zshrc</span></code>) to make it easier to run the command;</p></li>
+<li><p>or, the preferrable way, is to use <strong>Docker Compose</strong>.</p></li>
 </ul>
-</section>
-<section id="x11-windows-forwarding">
-<h2>X11 windows forwarding<a class="headerlink" href="#x11-windows-forwarding" title="Link to this heading">¶</a></h2>
-<p>To enable X11 windows forwarding, you should provide the <code class="docutils literal notranslate"><span class="pre">run</span></code> command the following arguments:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>-e<span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span><span class="nv">$DISPLAY</span><span class="w"> </span>-v<span class="w"> </span>/tmp/.X11-unix:/tmp/.X11-unix:rw
+<p>Docker Compose is a tool that enables to configure and run multiple containers using a single <code class="docutils literal notranslate"><span class="pre">.yaml</span></code> configuration file.
+Virtually, everything that can be done with the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> command can be done with Docker Compose.</p>
+<p>As an example, the file</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># File: docker-compose.yml</span>
+
+<span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">myubuntu</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu:22.04</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DISPLAY=${DISPLAY}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PRINTNAME=${USER}</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/tmp/.X11-unix:/tmp/.X11-unix</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bash -c &quot;echo Hello, World!&quot;</span>
 </pre></div>
 </div>
-<p>This command forwards the <code class="docutils literal notranslate"><span class="pre">DISPLAY</span></code> argument to the container and binds the X11 socket of the host machine to the container one
-(see <a class="reference external" href="https://stackoverflow.com/questions/28392949/running-chromium-inside-docker-gtk-cannot-open-display-0">here</a> for further referencing).</p>
-<p>If still you are unable to see the display and the terminal reports an error of the type <cite>cannot open display</cite>,
-call the following command to enable docker to control the local X11 server:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>xhost<span class="w"> </span>+local:docker
+<p>has the final result of the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--rm<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span><span class="nv">$DISPLAY</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="nv">PRINTNAME</span><span class="o">=</span><span class="nv">$USER</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-v<span class="w"> </span>/tmp/.X11-unix:/tmp/.X11-unix<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>ubuntu:22.04<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;echo Hello, World!&quot;</span>
 </pre></div>
 </div>
-</section>
+<p>To properly run the container through the Docker Compose command, first go to the directory where the <code class="docutils literal notranslate"><span class="pre">docker-compose.yaml</span></code> file is located and run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker-compose<span class="w"> </span>up
+</pre></div>
+</div>
+<p>This would yield the following output:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>+<span class="o">]</span><span class="w"> </span>Running<span class="w"> </span><span class="m">1</span>/0
+<span class="w"> </span>✔<span class="w"> </span>Container<span class="w"> </span>test-myubuntu-1<span class="w">  </span>Created<span class="w">                                                                                                                     </span><span class="m">0</span>.0s
+Attaching<span class="w"> </span>to<span class="w"> </span>myubuntu-1
+myubuntu-1<span class="w">  </span><span class="p">|</span><span class="w"> </span>Hello,<span class="w"> </span>World!
+myubuntu-1<span class="w"> </span>exited<span class="w"> </span>with<span class="w"> </span>code<span class="w"> </span><span class="m">0</span>
+</pre></div>
+</div>
+<p>In this case the <code class="docutils literal notranslate"><span class="pre">docker-compose.yaml</span></code> file was placed in a folder named <code class="docutils literal notranslate"><span class="pre">test</span></code>, thus the docker compose runtime created a container named <code class="docutils literal notranslate"><span class="pre">test-myubuntu-1</span></code>.
+The output of the command <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">Hello,</span> <span class="pre">World!</span></code> was overlayed in the terminal and since all containers (1 in this case) finished, the docker compose command completed as well.</p>
+<p>In general, to stop all containers created by the docker compose command, it is simply necessary to call <code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">down</span></code>.</p>
+<p>The complete list of available commands that can be used in Docker compose <code class="docutils literal notranslate"><span class="pre">.yaml</span></code> files can be found <a class="reference external" href="https://github.com/compose-spec/compose-spec/blob/master/spec.md">here</a>.</p>
 </section>
 
         </article>
@@ -304,28 +292,8 @@ call the following command to enable docker to control the local X11 server:</p>
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">Useful commands</a><ul>
-<li><a class="reference internal" href="#run-arguments">Run arguments</a></li>
-<li><a class="reference internal" href="#x11-windows-forwarding">X11 windows forwarding</a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>
